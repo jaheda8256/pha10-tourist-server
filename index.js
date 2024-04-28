@@ -10,7 +10,7 @@ app.use(express.json());
 
 
 
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.wotzmkf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 console.log(uri)
@@ -45,6 +45,24 @@ async function run() {
         const result = await touristCollection.insertOne(addTourists);
         res.send(result);
     })
+
+
+
+    app.get("/tourists/:id", async (req, res) => {
+        try {
+          const id = req.params.id;
+          console.log(id);
+          const result = await touristCollection.findOne({ _id: new ObjectId(id) });
+          if (result) {
+            res.send(result);
+          } else {
+            res.status(404).json({ error: "Tourists not found" });
+          }
+        } catch (error) {
+          console.error("Error fetching tourists:", error);
+          res.status(500).json({ error: "Internal server error" });
+        }
+      });
 
     // Send a ping to confirm a successful connection
    

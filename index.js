@@ -29,7 +29,7 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
   
     const touristCollection = client.db('touristsDB').collection('tourists');
-
+   
 
 
     app.get('/tourists', async(req, res) =>{
@@ -63,6 +63,14 @@ async function run() {
           res.status(500).json({ error: "Internal server error" });
         }
       });
+
+    //   user related apis
+    app.get('/tourists/:email', async (req, res) => {
+        const query = { userEmail: req.params.email }
+        const cursor =touristCollection.find(query)
+        const data = await cursor.toArray()
+        res.send(data)
+      })
 
     // Send a ping to confirm a successful connection
    

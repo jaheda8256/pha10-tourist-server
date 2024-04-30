@@ -29,14 +29,8 @@ async function run() {
     const touristCollection = client.db("touristsDB").collection("tourists");
 
 
-    
- // update code
-    app.get("/tourists/:id", async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) };
-      const result = await touristCollection.findOne(query);
-      res.send(result);
-    });
+
+
 
 
 
@@ -48,7 +42,13 @@ async function run() {
     });
 
    
-
+ // update code
+ app.get("/tourists/:id", async (req, res) => {
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id) };
+  const result = await touristCollection.findOne(query);
+  res.send(result);
+});
  
 
     // update put

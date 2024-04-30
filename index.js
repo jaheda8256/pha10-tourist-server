@@ -28,6 +28,18 @@ async function run() {
 
     const touristCollection = client.db("touristsDB").collection("tourists");
 
+
+    
+ // update code
+    app.get("/tourists/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await touristCollection.findOne(query);
+      res.send(result);
+    });
+
+
+
     // my list
     app.get("/tourists", async (req, res) => {
       const cursor = touristCollection.find();
@@ -35,14 +47,9 @@ async function run() {
       res.send(result);
     });
 
-    // update
+   
 
-    app.get("/tourists/:id", async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) };
-      const result = await touristCollection.findOne(query);
-      res.send(result);
-    });
+ 
 
     // update put
     app.put("/tourists/:id", async (req, res) => {
